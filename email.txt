@@ -1,0 +1,5 @@
+to : mohamed@gmail.com
+subject : hello
+msg : hi mohamed
+reciver name : mohamed
+__________________
