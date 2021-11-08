@@ -48,7 +48,7 @@ class Employee(Person):
     def __init__(self, id, car, email, salary, distancToWork, name, money):
         super().__init__(name, money)
         self.id = id
-        self.car = Car(car)
+        self.car = Car(car, fuelRate=100, velocity=100)
         self.email = email
         self.salary = salary
         self.distancToWork = distancToWork
@@ -83,7 +83,7 @@ class Employee(Person):
         else:
             print('lazy')
 
-    def Drive(self ,distance):
+    def Drive(self, distance):
         Car.Run()
         self.distancToWork = distance
 
@@ -182,7 +182,10 @@ man = Person('samy', 2000, 'tired', 500)
 # man.Buy(5)
 # print(man.money)
 
-emp = Employee(1, 'BMW', 'mohamed@gmail.com', 200, 20, 'mohamed', 5000)
+emp = Employee(1, 'BMW', 'mohamed@gmail.com', 200, 40, 'mohamed', 5000)
 # emp.SendEmail('mohamed@gmail.com', 'hello', 'hi mohamed', 'mohamed')
 # print(emp.salary)
 # print(emp.email)
+
+car1 = Car('KIA', 50, 80)
+# car1.Run(50, 80)
