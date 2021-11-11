@@ -1,4 +1,10 @@
 import re
+import json
+
+# class Object:
+#     def toJSON(self):
+#         return json.dumps(self, default=lambda o: o.__dict__,
+#             sort_keys=True, indent=4)
 
 class Person:
     moods = ('happy', 'tired', 'lazy')
@@ -62,6 +68,8 @@ class Employee(Person):
     def salary(self, salary):
         if abs(salary) < 1000:
             self.__salary = 1000
+        else:
+            self.__salary = salary
 
     ##email property
     @property
@@ -73,7 +81,10 @@ class Employee(Person):
     def email(self, email):
         self.__email = email
         email_pattern = r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
-        self.__email = re.match(email_pattern, self.__email)
+        newemail = re.search(email_pattern, self.__email)
+        return newemail
+        # self.__email = self.__email.__dict__
+
 
     def Work(self, hours):
         if hours == 8:
@@ -101,31 +112,64 @@ class Employee(Person):
 
 
 class Office:
-    def __init__(self, name, employees):
+    employeesNum = 0
+    def __init__(self, name, employees=None):
+        if employees is None:
+            employees = []
         self.name = name
         self.employees = employees
 
+    # def toJSON(self):
+    #     return json.dumps(self, default=lambda o: o.__dict__,
+    #         sort_keys=True, indent=4)
+
+    @classmethod
+    def change_emps_num(cls, num):
+        cls.employeesNum += num
+
+    @staticmethod
+    def calculate_lateness(mHours, distacne, velocity, tHours = 9):
+        cal_time = velocity/distacne
+        arrive_time = cal_time + mHours
+        if arrive_time > tHours:
+            return False
+        else:
+            return True
+
     def get_all_employees(self):
-        pass
+        return self.employees
 
-    def get_employee(self):
-        pass
+    def get_employee(self, id):
+        for emp in self.employees:
+            if id == emp.id:
+                return emp
 
-    def Hire(self):
-        pass
+    def Hire(self, *args):
+        for emp in args:
+            car = emp.car.__dict__
+            emp.__dict__.update({'car': car})
+            self.employees.append(emp.__dict__)
+            # self.employees.append(car)
 
-    def Fire(self):
-        pass
+    def Fire(self, id):
+        for emp in self.employees:
+            if id == emp.id:
+                self.employees.remove(emp)
 
-    def calculate_lateness(self):
-        pass
+    def Deduct(self, id, deduction):
+        for emp in self.employees:
+            if id == emp.id:
+                emp.salary = emp.salary - deduction
 
-    def Deduct(self):
-        pass
+    def Reward(self, id, reward):
+        for emp in self.employees:
+            if id == emp.id:
+                emp.salary = emp.salary + reward
 
-    def Reward(self):
-        pass
-
+    def check_lateness(self, id, mHours):
+        for emp in self.employees:
+            if id == emp.id:
+                pass
 
 class Car:
     def __init__(self, name, fuelRate, velocity):
@@ -182,10 +226,40 @@ man = Person('samy', 2000, 'tired', 500)
 # man.Buy(5)
 # print(man.money)
 
-emp = Employee(1, 'BMW', 'mohamed@gmail.com', 200, 40, 'mohamed', 5000)
+emp1 = Employee(1, 'BMW', 'mohamed@gmail.com', 200, 40, 'mohamed', 5000)
+emp1.mood = 'happy'
+emp2 = Employee(2, 'FIAT', 'smahy@gmail.com', 1200, 60, 'smahy', 10000)
+emp2.mood = 'lazy'
+emp4 = Employee(4, 'BYD', 'mooo@gmail.com', 4000, 80, 'mooo', 7000)
+emp4.mood = 'lazy'
+emp3 = Employee(3, 'KIA', 'tarek@gmail.com', 2000, 50, 'tarek', 8000)
 # emp.SendEmail('mohamed@gmail.com', 'hello', 'hi mohamed', 'mohamed')
 # print(emp.salary)
 # print(emp.email)
 
-car1 = Car('KIA', 50, 80)
+# car1 = Car('KIA', 50, 80)
 # car1.Run(50, 80)
+
+office1 = Office('ITI')
+office2 = Office('IT company')
+# office1.employeesNum = 2
+# office1.employeesNum = 1
+office1.Hire(emp1, emp2, emp4)
+office2.Hire(emp3)
+g = office1.get_all_employees()
+g1 = office2.get_all_employees()
+print(g, '\n')
+print(g1, '\n')
+
+# Office.change_emps_num(5)
+# print(Office.employeesNum)
+
+
+# json data file about ITI office
+# data = Office.toJSON(g)
+data = g
+with open('jsondata.txt', 'w') as outfile:
+    for emp in data:
+        json.dump(f'employee : {emp}', outfile)
+        outfile.write('\n')
+

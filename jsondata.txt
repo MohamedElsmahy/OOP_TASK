@@ -1,0 +1,3 @@
+"employee : {'name': 'mohamed', 'money': 5000, 'mood': 'happy', '_Person__health_Rate': 100, 'id': 1, 'car': {'name': 'BMW', '_Car__fuelRate': 100, '_Car__velocity': 100}, '_Employee__email': 'mohamed@gmail.com', '_Employee__salary': 1000, 'distancToWork': 40}"
+"employee : {'name': 'smahy', 'money': 10000, 'mood': 'lazy', '_Person__health_Rate': 100, 'id': 2, 'car': {'name': 'FIAT', '_Car__fuelRate': 100, '_Car__velocity': 100}, '_Employee__email': 'smahy@gmail.com', '_Employee__salary': 1200, 'distancToWork': 60}"
+"employee : {'name': 'mooo', 'money': 7000, 'mood': 'lazy', '_Person__health_Rate': 100, 'id': 4, 'car': {'name': 'BYD', '_Car__fuelRate': 100, '_Car__velocity': 100}, '_Employee__email': 'mooo@gmail.com', '_Employee__salary': 4000, 'distancToWork': 80}"
